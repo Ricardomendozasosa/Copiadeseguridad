@@ -1,0 +1,33 @@
+package com.fitclub.socio.infrastructure.adapter.out.persistence.mapper;
+
+import com.fitclub.socio.domain.model.Socio;
+import com.fitclub.socio.infrastructure.adapter.out.persistence.entity.SocioJpaEntity;
+
+public final class SocioPersistenceMapper {
+
+    private SocioPersistenceMapper() {
+    }
+
+    public static SocioJpaEntity toEntity(Socio socio) {
+        SocioJpaEntity entity = new SocioJpaEntity(
+                socio.getNombre(),
+                socio.getEmail(),
+                socio.getTelefono(),
+                socio.getFechaRegistro()
+        );
+        if (socio.getId() != null) {
+            entity.setId(socio.getId());
+        }
+        return entity;
+    }
+
+    public static Socio toDomain(SocioJpaEntity entity) {
+        return new Socio(
+                entity.getId(),
+                entity.getNombre(),
+                entity.getEmail(),
+                entity.getTelefono(),
+                entity.getFechaRegistro()
+        );
+    }
+}

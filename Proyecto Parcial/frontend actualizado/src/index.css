@@ -1,0 +1,353 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  background: #f5f5f7;
+  color: #1f2328;
+}
+
+/* =========================================================
+   Design tokens — Guía 09 (styles/tokens.css), verbatim
+   ========================================================= */
+:root {
+  --color-primary: #17365d;
+  --color-accent: #2f75b5;
+  --color-danger: #b42318;
+  --color-success: #067647;
+  --color-border: #d0d5dd;
+  --color-surface: #ffffff;
+  --color-muted: #667085;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --shadow-md: 0 12px 30px rgba(16, 24, 40, .14);
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: .75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+}
+
+/* =========================================================
+   Layout propio (app-shell / sidebar / topbar).
+   No viene literal de ninguna guía, pero usa los tokens
+   de la Guía 09 para quedar visualmente coherente.
+   ========================================================= */
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--color-primary);
+  color: #fff;
+  padding: var(--space-6) var(--space-3);
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.sidebar nav a {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  color: #dbe4f0;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.sidebar nav a:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.sidebar nav a[aria-current='page'] {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.app-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.topbar {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.topbar h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.topbar span {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+.app-content main {
+  padding: var(--space-6);
+}
+
+/* =========================================================
+   Guía 03 — tablas, tarjetas de estadísticas y estado vacío
+   (reglas verbatim; se omiten .status-badge / .status-active /
+   .status-inactive / .plate-cell porque Socio y Membresia no
+   tienen campo "activo" ni placa, así que no se usan)
+   ========================================================= */
+.feature-page {
+  display: grid;
+  gap: 1.25rem;
+}
+.page-heading h1 { margin: 0.15rem 0 0.35rem; font-size: 2rem; }
+.page-heading p { margin: 0; color: #64748b; }
+.eyebrow { color: #2563eb !important; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; }
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+.stat-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+}
+.stat-card span { display: block; color: #64748b; font-size: 0.85rem; }
+.stat-card strong { display: block; margin-top: 0.25rem; font-size: 1.65rem; color: #0f172a; }
+.table-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+}
+.table-responsive { overflow-x: auto; }
+.data-table { width: 100%; border-collapse: collapse; min-width: 820px; }
+.data-table th, .data-table td { padding: 0.95rem 1rem; text-align: left; border-bottom: 1px solid #eef2f7; }
+.data-table th { background: #f8fafc; color: #475569; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.data-table tbody tr:hover { background: #f8fbff; }
+.empty-state { padding: 2rem; text-align: center; color: #64748b; background: #ffffff; border: 1px dashed #cbd5e1; border-radius: 14px; }
+@media (max-width: 900px) {
+  .stats-grid { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   Guía 04 — formularios (reglas verbatim)
+   ========================================================= */
+.entity-form {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.form-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-weight: 600;
+  color: #1f2937;
+}
+.form-grid input,
+.form-grid select {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font: inherit;
+  background: #fff;
+}
+.form-grid input:focus,
+.form-grid select:focus {
+  outline: 3px solid rgba(59, 130, 246, 0.15);
+  border-color: #2563eb;
+}
+.form-span-2 { grid-column: 1 / -1; }
+.checkbox-field { flex-direction: row !important; align-items: center; }
+.checkbox-field input { width: auto; }
+.field-error { color: #b91c1c; font-weight: 500; }
+.form-success {
+  margin-top: 18px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #ecfdf5;
+  color: #166534;
+}
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+@media (max-width: 720px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .form-span-2 { grid-column: auto; }
+  .form-actions { flex-direction: column-reverse; }
+}
+
+/* =========================================================
+   Guía 09 — ui.css propio (la guía solo entrega tokens.css
+   y deja el resto a criterio del estudiante; estas reglas
+   usan esos mismos tokens para Button, SearchInput,
+   SelectFilter y Pagination).
+   ========================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.btn--primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+.btn--primary:hover:not(:disabled) {
+  opacity: 0.9;
+}
+.btn--secondary {
+  background: var(--color-surface);
+  color: var(--color-primary);
+  border-color: var(--color-border);
+}
+.btn--danger {
+  background: var(--color-danger);
+  color: #fff;
+}
+.btn--ghost {
+  background: transparent;
+  color: var(--color-accent);
+}
+.btn--ghost:hover:not(:disabled) {
+  background: rgba(47, 117, 181, 0.1);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: var(--space-4);
+}
+.field__label {
+  font-size: 0.78rem;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.field input,
+.field select {
+  padding: 11px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  background: #fff;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+.pagination span {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+/* =========================================================
+   Dashboard — métricas (propio, mismo criterio que arriba)
+   ========================================================= */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+.metric-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-md);
+}
+.metric-card span {
+  display: block;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+.metric-card strong {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: 1.65rem;
+  color: var(--color-primary);
+}
+@media (max-width: 900px) {
+  .metrics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .metrics-grid { grid-template-columns: 1fr; }
+  .app-shell { flex-direction: column; }
+  .sidebar { width: 100%; }
+}
+
+/* =========================================================
+   ConfirmDialog — propio (no viene de ninguna guía; no
+   existía confirmación porque antes no había DELETE).
+   Usa los mismos tokens de la Guía 09.
+   ========================================================= */
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  z-index: 50;
+}
+.dialog-box {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-6);
+  max-width: 420px;
+  width: 100%;
+}
+.dialog-box h3 {
+  margin: 0 0 var(--space-2);
+}
+.dialog-box p {
+  margin: 0;
+  color: var(--color-muted);
+}
